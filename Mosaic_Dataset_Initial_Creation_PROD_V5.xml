@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application>
+  <Name>PassParams</Name>
+  <Command>CM+AR+AF+SP+CV+ERF</Command>
+  <Workspace>
+    <WorkspacePath>c:\Image_Mgmt_Workflows\rasterdata\ocean_colour\SCENZ\Geodatabases_Mosaics\05_PROD</WorkspacePath>
+    <Geodatabase>NIWAGISadmin@GISDBsAG.niwa.local.sde;$GDBname$</Geodatabase>
+    <MosaicDataset>
+      <MosaicDatasetType>Source</MosaicDatasetType>
+      <Name>2018_1_;$MDS_name$</Name>
+     <SRS>PROJCS["NZGD2000/NewZealandTransverseMercator2000",GEOGCS["NZGD2000",DATUM["New_Zealand_Geodetic_Datum_2000",SPHEROID["GRS1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],TOWGS84[0,0,0,0,0,0,0],AUTHORITY["EPSG","6167"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.01745329251994328,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4167"]],UNIT["metre",1,AUTHORITY["EPSG","9001"]],PROJECTION["Transverse_Mercator"],PARAMETER["latitude_of_origin",0],PARAMETER["central_meridian",173],PARAMETER["scale_factor",0.9996],PARAMETER["false_easting",1600000],PARAMETER["false_northing",10000000],AUTHORITY["EPSG","2193"],AXIS["Easting",EAST],AXIS["Northing",NORTH]]</SRS>
+     <num_bands>1</num_bands>
+      <pixel_type></pixel_type>
+      <AddRasters>
+        <AddRaster>
+          <dataset_id>ZZ_TEST_General_Monthly;$MDS_name$</dataset_id>
+          <raster_type>Raster Dataset</raster_type>
+          <Sources>
+            <data_path>c:\Image_Mgmt_Workflows\rasterdata\ocean_colour\SCENZ\OPTIMIZED_Output\MRF_LERC\CHL_;c:\Image_Mgmt_Workflows\rasterdata\ocean_colour\SCENZ\OPTIMIZED_Output\MRF_LERC_PROD_5\$inputRasterPath$</data_path>
+          </Sources>
+          <filter>*MO*mrf;*$filterExpression$*mrf</filter>
+          <duplicate_items_action>EXCLUDE_DUPLICATES</duplicate_items_action>
+		  <calculate_statistics>CALCULATE_STATISTICS</calculate_statistics>
+		  <operation_description>Initial Setup with existing rasters</operation_description>
+        </AddRaster>
+      </AddRasters>
+        <!-- CRA  Copy Raster -->
+        <!--https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/copy-raster.htm -->
+        <CopyRaster>
+            <out_rasterdataset>c:\Image_Mgmt_Workflows\rasterdata\ocean_colour\SCENZ\Geodatabases_Mosaics\05_PROD\TEST222.crf</out_rasterdataset>
+            
+            <pixel_type>32_BIT_FLOAT</pixel_type>
+            
+            <format>MRF</format>
+            <transform>NONE</transform>
+            <process_as_multidimensional>ALL_SLICES</process_as_multidimensional>
+            
+        </CopyRaster>
+      <!-- ERF     Edit Raster Funtion -->
+            <!-- https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/edit-raster-function.htmm -->
+            <EditRasterFunction>
+                <edit_mosaic_dataset_item>EDIT_MOSAIC_DATASET_ITEM</edit_mosaic_dataset_item>
+                <edit_options>INSERT</edit_options>
+                <function_chain_definition>c:\Image_Mgmt_Workflows\rasterdata\ocean_colour\SCENZ\Geodatabases_Mosaics\ProcessingTemplate_RasterFunctions\TEST\SST_MO.rft.xml;c:\Image_Mgmt_Workflows\rasterdata\ocean_colour\SCENZ\Geodatabases_Mosaics\ProcessingTemplate_RasterFunctions\TEST\$RFTname$.rft.xml</function_chain_definition>
+                <location_function_name>Statistics and Histogram</location_function_name>
+            </EditRasterFunction>
+      <!-- SP    Set Properties -->
+			<!-- https://pro.arcgis.com/en/pro-app/latest/tool-reference/data-management/set-mosaic-dataset-properties.htm -->
+			<!-- sp_flag can take setpropertybyjson;setpropertybymosiac;extractproperty;compareproperty -->
+			<!-- sp_flag, if no flag is given, default set property is applied -->
+			<SetProperty>
+				<sp_inputjson>#;$sp_inputjson$</sp_inputjson>
+				<sp_mosaic>#;$sp_mosaic$</sp_mosaic>
+				<sp_outputjson>#;$sp_outputjson$</sp_outputjson>
+				<sp_flag>#;$sp_flag$</sp_flag>
+			</SetProperty>
+      <DefaultProperties>
+        <max_num_per_mosaic>100</max_num_per_mosaic>
+        <rows_maximum_imagesize>5000</rows_maximum_imagesize>
+        <columns_maximum_imagesize>5000</columns_maximum_imagesize>
+        <allowed_compressions>LERC;NONE;JPEG;LZ77</allowed_compressions>
+        <default_compression_type>LERC</default_compression_type>
+        <JPEG_quality>80</JPEG_quality>
+        <resampling_type>NEAREST</resampling_type>
+        <LERC_Tolerance>0.01</LERC_Tolerance>
+        <clip_to_footprints>CLIP</clip_to_footprints>
+        <clip_to_boundary>CLIP</clip_to_boundary>
+        <color_correction>NOT_APPLY</color_correction>
+        <footprints_may_contain_nodata>FOOTPRINTS_DO_NOT_CONTAIN_NODATA</footprints_may_contain_nodata>
+        <allowed_mensuration_capabilities>BASIC</allowed_mensuration_capabilities>
+        <default_mensuration_capabilities>BASIC</default_mensuration_capabilities>
+        <allowed_mosaic_methods>Center;NorthWest;Nadir;LockRaster;ByAttribute;Seamline;None</allowed_mosaic_methods>
+        <default_mosaic_method>ByAttribute</default_mosaic_method>
+        <Order_field>StdTime</Order_field>
+        <order_base>01/01/1900</order_base>
+        <sorting_order>Descending</sorting_order>
+        <mosaic_operator>LAST</mosaic_operator>
+        <blend_width>10</blend_width>
+        <view_point_x>300</view_point_x>
+        <view_point_y>300</view_point_y>
+        <max_num_per_mosaic>50</max_num_per_mosaic>
+        <cell_size_tolerance>2.5</cell_size_tolerance>
+        <cell_size>#</cell_size>
+        <metadata_level>BASIC</metadata_level>
+        <transmission_fields>Name;MinPS;MaxPS;LowPS;HighPS;StdTime;Year;Month</transmission_fields>
+        <use_time>ENABLED</use_time>
+        <start_time_field>StdTime</start_time_field>
+        <end_time_field>#</end_time_field>
+        <time_format>#</time_format>
+        <time_interval>1;$ti$</time_interval>
+        <time_interval_units>months;$tiu$</time_interval_units>
+        <geographic_transform>#</geographic_transform>
+        <max_num_of_download_items>50</max_num_of_download_items>
+        <max_num_of_records_returned>2000</max_num_of_records_returned>
+        <data_source_type>SCIENTIFIC</data_source_type>
+      </DefaultProperties>
+      <Table>
+          <AddFields>AddFields</AddFields>
+          <Fields>
+          <Field>
+              <name>Variable</name>
+              <type>TEXT</type>
+              <length>15</length>
+            </Field>
+          <Field>
+              <name>StdTime</name>
+              <type>Date</type>
+              <length></length>
+            </Field>
+             <Field>
+            <name>Dimensions</name>
+              <type>TEXT</type>
+              <length>10</length>
+            </Field>
+            <Field>
+              <name>Year</name>
+              <type>TEXT</type>
+              <length>4</length>
+            </Field>
+            <Field>
+              <name>Month</name>
+              <type>TEXT</type>
+              <length>2</length>
+            </Field>
+            <Field>
+              <name>Day</name>
+              <type>TEXT</type>
+              <length>2</length>
+            </Field>
+          </Fields>
+      </Table>
+      <Processes>
+      <CalculateValues>
+          <CalculateValue>
+          		  <expression_type>PYTHON</expression_type>
+                   <!-- NOTE: Set expression_type to PYTHON explicitly for 64 bit systems -->
+              <fieldName>Year</fieldName>
+              <expression>!Name![0:4]</expression> 
+          </CalculateValue> 
+           <CalculateValue>
+			  		  <expression_type>PYTHON</expression_type>
+                   <!-- NOTE: Set expression_type to PYTHON explicitly for 64 bit systems -->
+              <fieldName>Month</fieldName>
+              <expression>!Name![4:6]</expression> 
+          </CalculateValue> 
+          <CalculateValue>
+          		  <expression_type>PYTHON3</expression_type>
+                   <!-- NOTE: Set expression_type to PYTHON explicitly for 64 bit systems -->
+              <fieldName>Day</fieldName>
+              <expression>!Name![6:8]</expression> 
+          </CalculateValue> 
+          <CalculateValue>
+			  		  <expression_type>PYTHON3</expression_type>
+                   <!-- NOTE: Set expression_type to PYTHON explicitly for 64 bit systems -->
+              <fieldName>StdTime</fieldName>
+              <expression>time.strftime("/".join([!Day!, !Month!, !Year!]))</expression> <!--time.strftime('%d/%m/%Y') -->
+          </CalculateValue>
+          <CalculateValue>
+			  		  <expression_type>PYTHON3</expression_type>
+                   <!-- NOTE: Set expression_type to PYTHON explicitly for 64 bit systems -->
+              <fieldName>Variable</fieldName>
+              <expression>!Dataset_ID!;"$VariableName$"</expression> 
+          </CalculateValue>
+          <CalculateValue>
+			  		  <expression_type>PYTHON3</expression_type>
+                   <!-- NOTE: Set expression_type to PYTHON explicitly for 64 bit systems -->
+              <fieldName>Dimensions</fieldName>
+              <expression>"StdTime"</expression>
+          </CalculateValue>
+           <CalculateValue>
+			  		  <expression_type>PYTHON3</expression_type>
+                   <!-- NOTE: Set expression_type to PYTHON explicitly for 64 bit systems -->
+              <fieldName>GroupName</fieldName>
+              <expression>"Monthly";"$groupName$"</expression>
+          </CalculateValue>
+      </CalculateValues>
+        <CalculateCellSizeranges>
+          <where_clause/>
+          <do_compute_min>MIN_CELL_SIZES</do_compute_min>
+          <do_compute_max>MAX_CELL_SIZES</do_compute_max>
+          <max_range_factor>10</max_range_factor>
+          <cell_size_tolerance_factor>0.8</cell_size_tolerance_factor>
+          <update_missing_only>UPDATE_ALL</update_missing_only>
+        </CalculateCellSizeranges>
+        <BuildFootprint>
+          <reset_footprint>GEOMETRY</reset_footprint>
+          <max_data_value>255</max_data_value>
+          <min_data_value>1</min_data_value>
+          <approx_num_vertices>25</approx_num_vertices>
+          <update_boundary>UPDATE_BOUNDARY</update_boundary>
+        </BuildFootprint>
+        <BuildBoundary>
+          <append_to_existing>OVERWRITE</append_to_existing>
+          <simplification_method>NONE</simplification_method>
+        </BuildBoundary>
+        <BuildOverviews>
+          <where_clause>#</where_clause>
+          <define_missing_tiles>DEFINE_MISSING_TILES</define_missing_tiles>
+          <generate_overviews>GENERATE_OVERVIEWS</generate_overviews>
+          <generate_missing_images>GENERATE_MISSING_IMAGES</generate_missing_images>
+          <regenerate_stale_images>REGENERATE_STALE_IMAGES</regenerate_stale_images>
+        </BuildOverviews>
+        <DefineOverviews>
+          <overview_image_folder></overview_image_folder>
+          <in_template_dataset>#</in_template_dataset>
+          <extent>#</extent>
+          <pixel_size>#</pixel_size>
+          <number_of_levels>1</number_of_levels>
+          <tile_rows>5120</tile_rows>
+          <tile_cols>5120</tile_cols>
+          <overview_factor>2</overview_factor>
+          <force_overview_tiles>NO_FORCE_OVERVIEW_TILES</force_overview_tiles>
+          <resampling_method>NEAREST</resampling_method>
+          <compression_method>JPEG_YCbCr</compression_method>
+          <compression_quality>80</compression_quality>
+        </DefineOverviews>
+        <AddIndex>
+         <Index>
+            <fields>Variable</fields>
+            <index_name>idx_variable</index_name>
+            <ascending>ascending</ascending>
+          </Index>
+          <Index>
+            <fields>StdTime</fields>
+            <index_name>idx_Time</index_name>
+            <ascending>ascending</ascending>
+          </Index>
+          <Index>
+            <fields>GroupName</fields>
+            <index_name>idx_GroupName</index_name>
+            <ascending>ascending</ascending>
+          </Index>
+        </AddIndex>
+        <!-- BMI Builds mulitdimensional info in the mosiac dataset -->
+          <!--https://pro.arcgis.com/en/pro-app/tool-reference/data-management/build-multidimensional-info.htm -->
+        <BuildMultiDimensionalInfo>			
+          <variable_field>Variable</variable_field>
+          <dimension_fields>[StdTime, 'Time', Days;$tiu$]</dimension_fields>
+          <variable_desc_units>[A_variable_and_description;$myVarName$, 'A description', #]</variable_desc_units>
+        </BuildMultiDimensionalInfo>
+        <!-- CSDD Create an image service definition draft file -->
+        <!-- https://pro.arcgis.com/en/pro-app/latest/arcpy/functions/createimagesddraft.htm -->
+        <CreateImageSDDraft>
+            <out_sddraft>SDdraft.sddraft;$RFTname$.sddraft</out_sddraft>
+            <service_name>SDdraft_MDCS;SCENZ_$RFTname$</service_name>
+            <server_type>FROM_CONNECTION_FILE</server_type>
+            <connection_file_path>c:\Image_Mgmt_Workflows\rasterdata\ocean_colour\SCENZ\CodeScripts_andConfig\MosaicDatasetCreation\ARCHIVE\RAserver.ags</connection_file_path>
+            <copy_data_to_server>FALSE</copy_data_to_server>
+            <folder_name>SCENZ</folder_name>
+            <summary>MODIS coastal ocean-colour processing</summary>
+          <tags>MODIS,Aqua,MDCS,ImageService;</tags>
+        </CreateImageSDDraft>
+        <!-- STS Stages a service definition -->
+        <!-- https://pro.arcgis.com/en/pro-app/latest/tool-reference/server/stage-service.htm-->
+        <StageService_server>
+            <in_service_definition_draft>SDdraft.sddraft;$RFTname$.sddraft</in_service_definition_draft>
+            <out_service_definition>SDdraft.sd;$RFTname$.sd</out_service_definition>
+        </StageService_server>
+        <!-- USD Uploads and publishes a service definition to a specified server -->
+        <!-- https://pro.arcgis.com/en/pro-app/latest/tool-reference/server/upload-service-definition.htm -->
+        <UploadServiceDefinition_server>
+            <in_sd_file>SDdraft.sd;$RFTname$.sd</in_sd_file>
+            <in_server>c:\Image_Mgmt_Workflows\rasterdata\ocean_colour\SCENZ\CodeScripts_andConfig\MosaicDatasetCreation\ARCHIVE\RAserver.ags</in_server>
+            <in_service_name />
+            <in_cluster />
+            <in_folder_type />
+            <in_folder />
+            <in_startupType />
+            <in_override />
+            <in_my_contents />
+            <in_public />
+            <in_organization />
+            <in_groups />
+        </UploadServiceDefinition_server>
+      </Processes>
+    </MosaicDataset>
+  </Workspace>
+</Application>
