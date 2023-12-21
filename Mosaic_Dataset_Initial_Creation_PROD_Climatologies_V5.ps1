@@ -11,7 +11,7 @@
 # it works in parallel in 4 Timesteps (to run all variable parameters in sequence)
 # 
 # 
-# Directory configured  in XML files: \\bunsen.niwa.local\marinedata\Common\ArcGIS\PUBLISHING_APRX\SCENZ\MRF_LERC_PROD_5 (this is where rasters and GDBs are stored)
+# Directory configured  in XML files: C:\Common\ArcGIS\PUBLISHING_APRX\SCENZ\MRF_LERC_PROD_5 (this is where rasters and GDBs are stored)
 
 # ===============================
 # Setup - an install of Esri's MDCS Mosaic Dataset Configuration Scripts is needed. Configure its install location here:
