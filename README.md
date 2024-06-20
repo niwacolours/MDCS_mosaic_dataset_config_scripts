@@ -2,7 +2,7 @@
 
 Example of a script that uses Esri MDCS for the creation and configuration of nested mosaic datasets with multidimensional raster datasets (Dec 2023).
 
-If you are not sure what this is for, have a look at my [description here](https://bird70.github.io/ask-the-data/2023/12/19/Mosaic-Datasets-The-Esri-multidimensional-data-model.html)
+If you are not sure what this is for, have a look at my [description here]([https://bird70.github.io/ask-the-data/2023/12/19/Mosaic-Datasets-The-Esri-multidimensional-data-model.html](https://bird70.github.io/ask-the-data/2023/12/19/Scripting-Mosaic-Datasets-The-Esri-multidimensional-data-model.html))
 
 ## Prerequisites
 
